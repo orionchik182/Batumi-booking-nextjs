@@ -9,7 +9,11 @@ export const metadata = {
 
 export default async function Page() {
   const session = await auth();
-  const bookings = await getBookings(session?.user.guestId);
+
+  const guestId = session?.user.guestId;
+  if (!guestId) throw new Error("Guest ID is missing");
+
+  const bookings = await getBookings(guestId);
 
   return (
     <div>
