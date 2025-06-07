@@ -6,12 +6,12 @@ import {
   isSameDay,
   isWithinInterval,
 } from "date-fns";
-import { useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useReservation } from "./ReservationContext";
+import { CabinsDataType, Settings } from "../_types/interfaces";
 
-function isAlreadyBooked(range, datesArr) {
+function isAlreadyBooked(range: DateRange | undefined, datesArr: Date[]) {
   return (
     range?.from &&
     range?.to &&
@@ -21,7 +21,13 @@ function isAlreadyBooked(range, datesArr) {
   );
 }
 
-function DateSelector({ settings, cabin, bookedDates }) {
+interface DateSelectorProps {
+  settings: Settings;
+  cabin: CabinsDataType;
+  bookedDates: Date[];
+}
+
+function DateSelector({ settings, cabin, bookedDates }: DateSelectorProps) {
   const { range, setRange, resetRange } = useReservation();
 
   const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;

@@ -62,6 +62,55 @@ export interface ButtonType {
 }
 
 export interface RangeType {
-  from: number | undefined;
-  to: number | undefined;
+  from: Date | undefined;
+  to: Date | undefined;
+}
+
+export interface Guest {
+  id: number;
+  fullName: string;
+  email: string;
+  nationality: string | null;
+  nationalID: string | null;
+  countryFlag: string | null;
+}
+
+export interface UpdateGuestData {
+  nationality: string;
+  countryFlag: string;
+  nationalID: string;
+}
+
+export interface NewGuest {
+  email: string;
+  fullName: string;
+}
+
+export interface Settings {
+  minBookingLength: number;
+  maxBookingLength: number;
+}
+
+export interface Country {
+  name: string;
+  flag: string;
+}
+
+export interface BookingData {
+  startDate: Date;
+  endDate: Date;
+  numNights: number;
+  cabinPrice: number;
+  cabinId: number;
+}
+
+export interface NewBooking extends BookingData {
+  guestId?: number;
+  numGuests: number;
+  observations: string;
+  extrasPrice: number;
+  totalPrice: number;
+  isPaid: boolean;
+  hasBreakfast: boolean;
+  status: string;
 }

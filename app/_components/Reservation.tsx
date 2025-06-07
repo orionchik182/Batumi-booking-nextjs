@@ -6,7 +6,11 @@ import { CabinsDataType } from "../_types/interfaces";
 import { auth } from "../_lib/auth";
 import LoginMessage from "./LoginMessage";
 
-async function Reservation({ cabin }: { cabin: CabinsDataType }) {
+interface ReservationProps {
+  cabin: CabinsDataType;
+}
+
+async function Reservation({ cabin }: ReservationProps) {
   const [settings, bookedDates] = await Promise.all([
     getSettings(),
     getBookedDatesByCabinId(cabin.id),

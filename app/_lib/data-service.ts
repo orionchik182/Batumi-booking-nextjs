@@ -1,6 +1,16 @@
 import { eachDayOfInterval } from "date-fns";
 import { supabase } from "./supabase";
-import { Booking, CabinsDataType, CabinsPriceType } from "../_types/interfaces";
+import {
+  Booking,
+  CabinsDataType,
+  CabinsPriceType,
+  Country,
+  Guest,
+  NewBooking,
+  NewGuest,
+  Settings,
+  UpdateGuestData,
+} from "../_types/interfaces";
 import { notFound } from "next/navigation";
 
 /////////////
@@ -55,7 +65,8 @@ export const getCabins = async function (): Promise<CabinsDataType[]> {
 };
 
 // Guests are uniquely identified by their email address
-export async function getGuest(email: string) {
+
+export async function getGuest(email: string): Promise<Guest | null> {
   const { data, error } = await supabase
     .from("guests")
     .select("*")
@@ -66,8 +77,8 @@ export async function getGuest(email: string) {
   return data;
 }
 
-export async function getBooking(id: number) {
-  const { data, error, count } = await supabase
+export async function getBooking(id: number): Promise<Booking | null> {
+  const { data, error } = await supabase
     .from("bookings")
     .select("*")
     .eq("id", id)
@@ -82,7 +93,7 @@ export async function getBooking(id: number) {
 }
 
 export async function getBookings(guestId: number): Promise<Booking[]> {
-  const { data, error, count } = await supabase
+  const { data, error } = await supabase
     .from("bookings")
     // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
     .select(
@@ -131,7 +142,7 @@ export async function getBookedDatesByCabinId(
   return bookedDates;
 }
 
-export async function getSettings() {
+export async function getSettings(): Promise<Settings> {
   const { data, error } = await supabase.from("settings").select("*").single();
 
   if (error) {
@@ -142,7 +153,7 @@ export async function getSettings() {
   return data;
 }
 
-export async function getCountries() {
+export async function getCountries(): Promise<Country[]> {
   try {
     const res = await fetch(
       "https://restcountries.com/v2/all?fields=name,flag",
@@ -157,7 +168,7 @@ export async function getCountries() {
 /////////////
 // CREATE
 
-export async function createGuest(newGuest) {
+export async function createGuest(newGuest: NewGuest): Promise<Guest[]> {
   const { data, error } = await supabase.from("guests").insert([newGuest]);
 
   if (error) {
@@ -168,7 +179,7 @@ export async function createGuest(newGuest) {
   return data;
 }
 
-export async function createBooking(newBooking) {
+export async function createBooking(newBooking: NewBooking): Promise<Booking | null> {
   const { data, error } = await supabase
     .from("bookings")
     .insert([newBooking])
@@ -188,7 +199,10 @@ export async function createBooking(newBooking) {
 // UPDATE
 
 // The updatedFields is an object which should ONLY contain the updated data
-export async function updateGuestSupabase(id, updatedFields) {
+export async function updateGuestSupabase(
+  id: number,
+  updatedFields: UpdateGuestData,
+): Promise<unknown> {
   const { data, error } = await supabase
     .from("guests")
     .update(updatedFields)
@@ -201,7 +215,10 @@ export async function updateGuestSupabase(id, updatedFields) {
   return data;
 }
 
-export async function updateBooking(id, updatedFields) {
+export async function updateBooking(
+  id: number,
+  updatedFields: Partial<Booking>,
+): Promise<Booking | null> {
   const { data, error } = await supabase
     .from("bookings")
     .update(updatedFields)
@@ -219,7 +236,7 @@ export async function updateBooking(id, updatedFields) {
 /////////////
 // DELETE
 
-export async function deleteBooking(id: number) {
+export async function deleteBooking(id: number): Promise<unknown> {
   const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 
   if (error) {

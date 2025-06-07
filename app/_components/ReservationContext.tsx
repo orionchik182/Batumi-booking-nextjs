@@ -3,11 +3,23 @@
 import React, { createContext, useContext, useState } from "react";
 import { RangeType } from "../_types/interfaces";
 
-const ReservationContext = createContext();
+interface ReservationContextType {
+  range: RangeType;
+  setRange: React.Dispatch<React.SetStateAction<RangeType>>;
+  resetRange: () => void;
+}
 
-const initialState = { from: undefined, to: undefined };
+const ReservationContext = createContext<ReservationContextType | undefined>(
+  undefined,
+);
 
-function ReservationProvider({ children }: { children: React.ReactNode }) {
+const initialState: RangeType = { from: undefined, to: undefined };
+
+interface ReservationProviderProps {
+  children: React.ReactNode;
+}
+
+function ReservationProvider({ children }: ReservationProviderProps) {
   const [range, setRange] = useState<RangeType>(initialState);
   const resetRange = () => setRange(initialState);
 

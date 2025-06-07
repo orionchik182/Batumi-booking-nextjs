@@ -5,7 +5,11 @@ import { deleteReservation } from "../_lib/actions";
 import { useTransition } from "react";
 import SpinnerMini from "./SpinnerMini";
 
-function DeleteReservation({ bookingId }) {
+interface DeleteReservationProps {
+  bookingId: number;
+}
+
+function DeleteReservation({ bookingId }: DeleteReservationProps) {
   const [isPending, startTransition] = useTransition();
 
   function handleDelete() {

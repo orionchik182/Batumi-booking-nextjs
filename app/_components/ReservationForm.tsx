@@ -5,8 +5,17 @@ import { CabinsDataType } from "../_types/interfaces";
 import { useReservation } from "./ReservationContext";
 import { createReservation } from "../_lib/actions";
 import FormUpdateButton from "./FormUpdateButton";
+import Image from "next/image";
 
-function ReservationForm({ cabin, user }: { cabin: CabinsDataType }) {
+interface ReservationFormProps {
+  cabin: CabinsDataType;
+  user: {
+    name?: string | null;
+    image?: string | null;
+  };
+}
+
+function ReservationForm({ cabin, user }: ReservationFormProps) {
   const { range, resetRange } = useReservation();
   const { maxCapacity, regularPrice, discount, id } = cabin;
 
@@ -32,12 +41,14 @@ function ReservationForm({ cabin, user }: { cabin: CabinsDataType }) {
         <p>Logged in as</p>
 
         <div className="flex items-center gap-4">
-          <img
+          <Image
             // Important to display google profile images
             referrerPolicy="no-referrer"
             className="h-8 rounded-full"
-            src={user.image}
-            alt={user.name}
+            src={user.image || ""}
+            alt={user.name || "guest"}
+            width={32}
+            height={32}
           />
           <span>{user.name}</span>
         </div>

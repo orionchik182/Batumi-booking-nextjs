@@ -10,8 +10,9 @@ import {
   updateGuestSupabase,
 } from "./data-service";
 import { redirect } from "next/navigation";
+import { BookingData, NewBooking, UpdateGuestData } from "../_types/interfaces";
 
-export async function updateGuest(formData) {
+export async function updateGuest(formData: FormData): Promise<void> {
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
 
@@ -21,17 +22,20 @@ export async function updateGuest(formData) {
   if (!/^[a-zA-Z0-9]{6,12}$/.test(nationalID))
     throw new Error("Please provide a valid national ID");
 
-  const updateData = { nationality, countryFlag, nationalID };
+  const updateData: UpdateGuestData = { nationality, countryFlag, nationalID };
 
   await updateGuestSupabase(session.user.guestId, updateData);
   revalidatePath("/account/profile");
 }
 
-export async function createReservation(bookingData, formData) {
+export async function createReservation(
+  bookingData: BookingData,
+  formData: FormData,
+) : Promise<void> {
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
 
-  const newBooking = {
+  const newBooking: NewBooking = {
     ...bookingData,
     guestId: session.user?.guestId,
     numGuests: Number(formData.get("numGuests")),
@@ -48,7 +52,7 @@ export async function createReservation(bookingData, formData) {
   redirect("/cabins/thankyou");
 }
 
-export async function updateReservation(formData) {
+export async function updateReservation(formData: FormData): Promise<void> {
   // 1) Authentication
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
@@ -66,14 +70,14 @@ export async function updateReservation(formData) {
   const numGuests = Number(formData.get("numGuests"));
   const observations = formData.get("observations").slice(0, 1000);
 
-  const updateData = { numGuests, observations };
+  const updateData: Partial<NewBooking> = { numGuests, observations };
 
   await updateBooking(id, updateData);
   revalidatePath("/account/reservations");
   redirect("/account/reservations");
 }
 
-export async function deleteReservation(bookingId) {
+export async function deleteReservation(bookingId: number): Promise<void> {
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
   const guestBookings = await getBookings(session.user.guestId);
@@ -84,10 +88,10 @@ export async function deleteReservation(bookingId) {
   revalidatePath("/account/reservations");
 }
 
-export async function signInAction() {
+export async function signInAction(): Promise<void> {
   await signIn("google", { redirectTo: "/account" });
 }
 
-export async function signOutAction() {
+export async function signOutAction(): Promise<void> {
   await signOut({ redirectTo: "/" });
 }

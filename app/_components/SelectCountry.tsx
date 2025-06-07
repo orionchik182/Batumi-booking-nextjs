@@ -1,6 +1,21 @@
 // Let's imagine your colleague already built this component 😃
+import { Country } from "../_types/interfaces";
 
-function SelectCountry({ selectedCountry, name, id, className, countries }) {
+interface SelectCountryProps {
+  selectedCountry: string;
+  name: string;
+  id: string;
+  className?: string;
+  countries: Country[];
+}
+
+function SelectCountry({
+  selectedCountry,
+  name,
+  id,
+  className,
+  countries,
+}: SelectCountryProps) {
   const flag =
     countries.find((country) => country.name === selectedCountry)?.flag ?? "";
 
