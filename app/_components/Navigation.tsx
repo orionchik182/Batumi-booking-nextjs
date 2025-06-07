@@ -31,14 +31,15 @@ async function Navigation() {
               href="/account"
               className="hover:text-accent-400 flex items-center gap-4 transition-colors"
             >
-              <Image
-                src={session.user.image}
-                className="h-8 rounded-full"
-                alt="avatar image"
-                referrerPolicy="no-referrer"
-                width={32}
-                height={32}
-              />
+              <div className="relative h-8 w-8">
+                <Image
+                  src={session.user.image}
+                  fill
+                  className="h-8 rounded-full object-cover"
+                  alt="avatar image"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
               <span>Guest area</span>
             </Link>
           ) : (
