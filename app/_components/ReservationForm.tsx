@@ -22,6 +22,8 @@ function ReservationForm({ cabin, user }: ReservationFormProps) {
   const startDate = range.from;
   const endDate = range.to;
 
+  if (!startDate || !endDate) return null;
+
   const numNights = differenceInDays(endDate, startDate);
   const cabinPrice = numNights * (regularPrice - discount);
 

@@ -67,7 +67,7 @@ export const getCabins = async function (): Promise<CabinsDataType[]> {
 // Guests are uniquely identified by their email address
 
 export async function getGuest(email: string): Promise<Guest | null> {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("guests")
     .select("*")
     .eq("email", email)
@@ -168,7 +168,7 @@ export async function getCountries(): Promise<Country[]> {
 /////////////
 // CREATE
 
-export async function createGuest(newGuest: NewGuest): Promise<Guest[]> {
+export async function createGuest(newGuest: NewGuest): Promise<Guest[] | null> {
   const { data, error } = await supabase.from("guests").insert([newGuest]);
 
   if (error) {
@@ -179,7 +179,9 @@ export async function createGuest(newGuest: NewGuest): Promise<Guest[]> {
   return data;
 }
 
-export async function createBooking(newBooking: NewBooking): Promise<Booking | null> {
+export async function createBooking(
+  newBooking: NewBooking,
+): Promise<Booking | null> {
   const { data, error } = await supabase
     .from("bookings")
     .insert([newBooking])

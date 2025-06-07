@@ -31,6 +31,7 @@ export interface Booking {
   totalPrice: number;
   guestId: number;
   cabinId: number;
+  observations: string;
   cabins: {
     name: string;
     image: string;

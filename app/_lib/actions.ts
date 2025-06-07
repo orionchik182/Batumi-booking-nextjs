@@ -10,36 +10,44 @@ import {
   updateGuestSupabase,
 } from "./data-service";
 import { redirect } from "next/navigation";
-import { BookingData, NewBooking, UpdateGuestData } from "../_types/interfaces";
+import { Booking, BookingData, NewBooking, UpdateGuestData } from "../_types/interfaces";
 
 export async function updateGuest(formData: FormData): Promise<void> {
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
 
-  const nationalID = formData.get("nationalID");
-  const [nationality, countryFlag] = formData.get("nationality").split("%");
+  const nationalID = formData.get("nationalID") as string;
+  const nationalityRaw = formData.get("nationality") as string;
+  const [nationality, countryFlag] = nationalityRaw.split("%");
 
-  if (!/^[a-zA-Z0-9]{6,12}$/.test(nationalID))
+  if (!nationalID || !/^[a-zA-Z0-9]{6,12}$/.test(nationalID))
     throw new Error("Please provide a valid national ID");
 
   const updateData: UpdateGuestData = { nationality, countryFlag, nationalID };
 
-  await updateGuestSupabase(session.user.guestId, updateData);
+  const guestId = session.user.guestId;
+  if (!guestId) throw new Error("Guest ID is missing");
+
+  await updateGuestSupabase(guestId, updateData);
   revalidatePath("/account/profile");
 }
 
 export async function createReservation(
   bookingData: BookingData,
   formData: FormData,
-) : Promise<void> {
+): Promise<void> {
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
+
+  const numGuests = Number(formData.get("numGuests"));
+  const observations =
+    (formData.get("observations") as string)?.slice(0, 1000) ?? "";
 
   const newBooking: NewBooking = {
     ...bookingData,
     guestId: session.user?.guestId,
-    numGuests: Number(formData.get("numGuests")),
-    observations: formData.get("observations").slice(0, 1000),
+    numGuests,
+    observations,
     extrasPrice: 0,
     totalPrice: bookingData.cabinPrice,
     isPaid: false,
@@ -58,7 +66,10 @@ export async function updateReservation(formData: FormData): Promise<void> {
   if (!session) throw new Error("You must be logged in");
 
   // 2) Authorization
-  const guestBookings = await getBookings(session.user.guestId);
+  const guestId = session.user.guestId;
+  if (!guestId) throw new Error("Guest ID is missing");
+
+  const guestBookings = await getBookings(guestId);
   const guestBookingIds = guestBookings.map((booking) => booking.id);
 
   const id = Number(formData.get("id"));
@@ -68,9 +79,10 @@ export async function updateReservation(formData: FormData): Promise<void> {
 
   // 3) Building update data
   const numGuests = Number(formData.get("numGuests"));
-  const observations = formData.get("observations").slice(0, 1000);
+  const observations =
+    (formData.get("observations") as string)?.slice(0, 1000) ?? "";
 
-  const updateData: Partial<NewBooking> = { numGuests, observations };
+  const updateData: Partial<Booking> = { numGuests, observations };
 
   await updateBooking(id, updateData);
   revalidatePath("/account/reservations");
@@ -80,7 +92,11 @@ export async function updateReservation(formData: FormData): Promise<void> {
 export async function deleteReservation(bookingId: number): Promise<void> {
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
-  const guestBookings = await getBookings(session.user.guestId);
+
+  const guestId = session.user.guestId;
+  if (!guestId) throw new Error("Guest ID is missing");
+
+  const guestBookings = await getBookings(guestId);
   const guestBookingIds = guestBookings.map((booking) => booking.id);
   if (!guestBookingIds.includes(bookingId))
     throw new Error("You are not allowed to delete this booking");
