@@ -3,10 +3,18 @@ import { updateReservation } from "@/app/_lib/actions";
 
 import { getBooking, getCabin } from "@/app/_lib/data-service";
 
-export default async function Page({ params }: { params: { id: number } }) {
-  const { id } = params;
-  const { numGuests, observations, cabinId } = await getBooking(id);
-  const { maxCapacity } = await getCabin(cabinId);
+export default async function Page({ params }: { params: { id: string } }) {
+  const id = Number(params.id);
+  
+  const booking = await getBooking(id);
+  if (!booking) throw new Error("Booking not found");
+
+  const { numGuests, observations, cabinId } = booking;
+
+  const cabin = await getCabin(cabinId);
+  if (!cabin) throw new Error("Cabin not found");
+
+  const { maxCapacity } = cabin;
 
   return (
     <div>
