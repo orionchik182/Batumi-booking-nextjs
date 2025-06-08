@@ -1,6 +1,6 @@
 "use client";
 
-import { ErrorProps } from "./_types/interfaces";
+import { ErrorProps } from "@/@types/next-auth";
 
 export default function Error({ error, reset }: ErrorProps) {
   return (

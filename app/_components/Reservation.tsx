@@ -2,9 +2,10 @@ import React from "react";
 import DateSelector from "./DateSelector";
 import ReservationForm from "./ReservationForm";
 import { getBookedDatesByCabinId, getSettings } from "../_lib/data-service";
-import { CabinsDataType } from "../_types/interfaces";
+
 import { auth } from "../_lib/auth";
 import LoginMessage from "./LoginMessage";
+import { CabinsDataType } from "@/@types/next-auth";
 
 interface ReservationProps {
   cabin: CabinsDataType;

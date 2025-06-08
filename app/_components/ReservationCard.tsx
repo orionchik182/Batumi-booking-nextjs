@@ -3,16 +3,15 @@ import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
 import DeleteReservation from "./DeleteReservation";
 import Image from "next/image";
 import Link from "next/link";
-import { Booking } from "../_types/interfaces";
+import { ReservationCardProps } from "@/@types/next-auth";
 
-export const formatDistanceFromNow = (dateStr) =>
+
+export const formatDistanceFromNow = (dateStr: string) =>
   formatDistance(parseISO(dateStr), new Date(), {
     addSuffix: true,
   }).replace("about ", "");
 
-interface ReservationCardProps {
-  booking: Booking;
-}
+
 
 function ReservationCard({ booking }: ReservationCardProps) {
   const {

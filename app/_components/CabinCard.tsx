@@ -1,7 +1,8 @@
+import { CabinsDataType } from "@/@types/next-auth";
 import { UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { CabinsDataType } from "../_types/interfaces";
+
 
 function CabinCard({ cabin }: { cabin: CabinsDataType }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;

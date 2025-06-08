@@ -1,7 +1,8 @@
 import React from "react";
 import CabinCard from "./CabinCard";
 import { getCabins } from "../_lib/data-service";
-import { CabinsDataType, FilterType } from "../_types/interfaces";
+import { CabinsDataType, FilterType } from "@/@types/next-auth";
+
 
 export default async function CabinList({ filter }: { filter: FilterType }) {
   const cabins = await getCabins();

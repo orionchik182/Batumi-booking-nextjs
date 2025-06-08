@@ -1,8 +1,9 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FilterType } from "../_types/interfaces";
+
 import { Button } from "./Button";
+import { FilterType } from "@/@types/next-auth";
 
 function Filter() {
   const searchParams = useSearchParams();

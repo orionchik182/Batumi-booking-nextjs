@@ -1,13 +1,6 @@
 // Let's imagine your colleague already built this component 😃
-import { Country } from "../_types/interfaces";
 
-interface SelectCountryProps {
-  selectedCountry: string;
-  name: string;
-  id: string;
-  className?: string;
-  countries: Country[];
-}
+import { SelectCountryProps } from "@/@types/next-auth";
 
 function SelectCountry({
   selectedCountry,

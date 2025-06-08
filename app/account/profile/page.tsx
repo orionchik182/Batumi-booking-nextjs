@@ -9,8 +9,13 @@ export const metadata = {
 
 export default async function Page() {
   const session = await auth();
+
+  if (!session?.user?.email) throw new Error("Email is missing from session");
+
   const guest = await getGuest(session?.user?.email);
   const countries = await getCountries();
+
+  if (!guest) return <p className="text-red-500">Guest not found</p>;
 
   return (
     <div>
@@ -29,7 +34,7 @@ export default async function Page() {
           name="nationality"
           id="nationality"
           className="bg-primary-200 text-primary-800 w-full rounded-sm px-5 py-3 shadow-sm"
-          selectedCountry={guest.nationality}
+          selectedCountry={guest.nationality ?? ""}
           countries={countries}
         />
       </UpdateProfileForm>

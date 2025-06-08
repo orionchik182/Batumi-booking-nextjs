@@ -1,13 +1,7 @@
 "use client";
 
+import { RangeType, ReservationContextType } from "@/@types/next-auth";
 import React, { createContext, useContext, useState } from "react";
-import { RangeType } from "../_types/interfaces";
-
-interface ReservationContextType {
-  range: RangeType;
-  setRange: React.Dispatch<React.SetStateAction<RangeType>>;
-  resetRange: () => void;
-}
 
 const ReservationContext = createContext<ReservationContextType | undefined>(
   undefined,

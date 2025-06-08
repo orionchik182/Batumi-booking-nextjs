@@ -1,4 +1,4 @@
-import { RootLayoutProps } from "../_types/interfaces";
+import { RootLayoutProps } from "@/@types/next-auth";
 import SideNavigation from "@/app/_components/SideNavigation";
 
 function Layout({ children }: RootLayoutProps) {

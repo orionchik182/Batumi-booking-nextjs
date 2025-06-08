@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Header from "./_components/Header";
-import { RootLayoutProps } from "./_types/interfaces";
+import { RootLayoutProps } from "@/@types/next-auth";
 
 import "./_styles/globals.css";
 import { Josefin_Sans } from "next/font/google";

@@ -10,7 +10,8 @@ import {
   updateGuestSupabase,
 } from "./data-service";
 import { redirect } from "next/navigation";
-import { Booking, BookingData, NewBooking, UpdateGuestData } from "../_types/interfaces";
+import { Booking, BookingData, NewBooking, UpdateGuestData } from "@/@types/next-auth";
+
 
 export async function updateGuest(formData: FormData): Promise<void> {
   const session = await auth();

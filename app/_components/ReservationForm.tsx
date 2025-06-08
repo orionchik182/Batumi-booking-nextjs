@@ -1,19 +1,13 @@
 "use client";
 
 import { differenceInDays } from "date-fns";
-import { CabinsDataType } from "../_types/interfaces";
+
 import { useReservation } from "./ReservationContext";
 import { createReservation } from "../_lib/actions";
 import FormUpdateButton from "./FormUpdateButton";
 import Image from "next/image";
+import { ReservationFormProps } from "@/@types/next-auth";
 
-interface ReservationFormProps {
-  cabin: CabinsDataType;
-  user: {
-    name?: string | null;
-    image?: string | null;
-  };
-}
 
 function ReservationForm({ cabin, user }: ReservationFormProps) {
   const { range, resetRange } = useReservation();

@@ -1,4 +1,5 @@
-import { ButtonType } from "../_types/interfaces";
+import { ButtonType } from "@/@types/next-auth";
+
 
 export function Button({
   filter,

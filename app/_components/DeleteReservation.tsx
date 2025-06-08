@@ -4,10 +4,9 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import { deleteReservation } from "../_lib/actions";
 import { useTransition } from "react";
 import SpinnerMini from "./SpinnerMini";
+import { DeleteReservationProps } from "@/@types/next-auth";
 
-interface DeleteReservationProps {
-  bookingId: number;
-}
+
 
 function DeleteReservation({ bookingId }: DeleteReservationProps) {
   const [isPending, startTransition] = useTransition();

@@ -3,13 +3,13 @@ import { updateReservation } from "@/app/_lib/actions";
 
 
 import { getBooking, getCabin } from "@/app/_lib/data-service";
-import { JSX } from "react";
+
 
 export default async function Page({
   params,
 }: {
   params: { id: string };
-}): Promise<JSX.Element> {
+}) {
   const id = Number(params.id);
 
   const booking = await getBooking(id);

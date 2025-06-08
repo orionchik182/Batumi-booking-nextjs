@@ -4,13 +4,9 @@ import React from "react";
 import { updateGuest } from "../_lib/actions";
 
 import FormUpdateButton from "./FormUpdateButton";
-import { Guest } from "../_types/interfaces";
-import Image from "next/image";
 
-interface UpdateProfileFormProps {
-  guest: Guest;
-  children: React.ReactNode;
-}
+import Image from "next/image";
+import { UpdateProfileFormProps } from "@/@types/next-auth";
 
 function UpdateProfileForm({ guest, children }: UpdateProfileFormProps) {
   const { fullName, email, nationalID, countryFlag } = guest;
@@ -43,7 +39,15 @@ function UpdateProfileForm({ guest, children }: UpdateProfileFormProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label htmlFor="nationality">Where are you from?</label>
-          <Image src={countryFlag} alt="Country flag" className="h-5 rounded-sm" width={20} height={20} />
+          {countryFlag && (
+            <Image
+              src={countryFlag}
+              alt="Country flag"
+              className="h-5 rounded-sm"
+              width={20}
+              height={20}
+            />
+          )}
         </div>
 
         {children}
@@ -52,7 +56,7 @@ function UpdateProfileForm({ guest, children }: UpdateProfileFormProps) {
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
         <input
-          defaultValue={nationalID}
+          defaultValue={nationalID || ""}
           name="nationalID"
           className="bg-primary-200 text-primary-800 w-full rounded-sm px-5 py-3 shadow-sm"
         />

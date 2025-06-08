@@ -9,31 +9,33 @@ import {
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useReservation } from "./ReservationContext";
-import { CabinsDataType, Settings } from "../_types/interfaces";
+import { DateSelectorProps } from "@/@types/next-auth";
 
 function isAlreadyBooked(range: DateRange | undefined, datesArr: Date[]) {
-  return (
-    range?.from &&
-    range?.to &&
-    datesArr.some((date) =>
-      isWithinInterval(date, { start: range?.from, end: range?.to }),
-    )
-  );
-}
+  if (!range?.from || !range?.to) return false;
 
-interface DateSelectorProps {
-  settings: Settings;
-  cabin: CabinsDataType;
-  bookedDates: Date[];
+  const start = range.from as Date;
+  const end = range.to as Date;
+
+  return datesArr.some((date) => isWithinInterval(date, { start, end }));
 }
 
 function DateSelector({ settings, cabin, bookedDates }: DateSelectorProps) {
   const { range, setRange, resetRange } = useReservation();
 
-  const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;
+  const displayRange: DateRange | undefined = isAlreadyBooked(
+    range,
+    bookedDates,
+  )
+    ? undefined
+    : range;
 
   const { regularPrice, discount } = cabin;
-  const numNights = differenceInDays(displayRange.to, displayRange.from);
+
+  const from = displayRange?.from;
+  const to = displayRange?.to;
+  const numNights = from && to ? differenceInDays(to, from) : 0;
+
   const cabinPrice = numNights * (regularPrice - discount);
 
   // SETTINGS

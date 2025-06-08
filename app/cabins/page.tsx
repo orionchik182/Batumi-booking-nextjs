@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import CabinList from "../_components/CabinList";
 import { Suspense } from "react";
 import Spinner from "../_components/Spinner";
-import { FilterType } from "../_types/interfaces";
+import { FilterType } from "@/@types/next-auth";
 import Filter from "../_components/Filter";
 import ReservationReminder from "../_components/ReservationReminder";
 

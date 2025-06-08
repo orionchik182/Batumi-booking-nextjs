@@ -10,7 +10,7 @@ import {
   NewGuest,
   Settings,
   UpdateGuestData,
-} from "../_types/interfaces";
+} from "@/@types/next-auth";
 import { notFound } from "next/navigation";
 
 /////////////
@@ -97,7 +97,7 @@ export async function getBookings(guestId: number): Promise<Booking[]> {
     .from("bookings")
     // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
     .select(
-      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)",
+      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, observations, guestId, cabinId, cabins(name, image)",
     )
     .eq("guestId", guestId)
     .order("startDate");
