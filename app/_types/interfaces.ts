@@ -38,20 +38,10 @@ export interface Booking {
   }[];
 }
 
-export type PageProps = {
-  params: { cabinId: string };
-};
-
 export interface ErrorProps {
   error: Error;
   reset: () => void;
 }
-
-export type SearchParams = {
-  searchParams: {
-    capacity?: string;
-  };
-};
 
 export type FilterType = "all" | "small" | "medium" | "large";
 

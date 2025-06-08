@@ -3,11 +3,15 @@ import Reservation from "@/app/_components/Reservation";
 import Spinner from "@/app/_components/Spinner";
 
 import { getCabin, getCabins } from "@/app/_lib/data-service";
-import { PageProps } from "@/app/_types/interfaces";
+import { Metadata } from "next";
 
-import { Suspense } from "react";
+import { ReactElement, Suspense } from "react";
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { cabinId: string };
+}): Promise<Metadata> {
   const cabin = await getCabin(Number(params.cabinId));
   const name = cabin?.name;
   return { title: name ? `Cabin ${name}` : "Cabin" };
@@ -21,7 +25,11 @@ export async function generateStaticParams() {
   return ids;
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({
+  params,
+}: {
+  params: { cabinId: string };
+}): Promise<ReactElement> {
   const cabin = await getCabin(Number(params.cabinId));
 
   if (!cabin) return <div>Cabin not found</div>;

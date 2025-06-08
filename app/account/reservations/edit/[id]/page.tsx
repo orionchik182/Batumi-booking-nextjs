@@ -1,11 +1,17 @@
 import FormUpdateButton from "@/app/_components/FormUpdateButton";
 import { updateReservation } from "@/app/_lib/actions";
 
-import { getBooking, getCabin } from "@/app/_lib/data-service";
 
-export default async function Page({ params }: { params: { id: string } }) {
+import { getBooking, getCabin } from "@/app/_lib/data-service";
+import { JSX } from "react";
+
+export default async function Page({
+  params,
+}: {
+  params: { id: string };
+}): Promise<JSX.Element> {
   const id = Number(params.id);
-  
+
   const booking = await getBooking(id);
   if (!booking) throw new Error("Booking not found");
 

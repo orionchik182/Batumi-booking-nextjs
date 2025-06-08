@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import CabinList from "../_components/CabinList";
 import { Suspense } from "react";
 import Spinner from "../_components/Spinner";
-import { FilterType, SearchParams } from "../_types/interfaces";
+import { FilterType } from "../_types/interfaces";
 import Filter from "../_components/Filter";
 import ReservationReminder from "../_components/ReservationReminder";
 
@@ -11,7 +11,11 @@ export const metadata: Metadata = {
   title: "Cabins",
 };
 
-export default function Page({ searchParams }: SearchParams) {
+export default function Page({
+  searchParams,
+}: {
+  searchParams?: { capacity?: string };
+}) {
   const raw = searchParams?.capacity;
   const filter: FilterType =
     raw === "all" || raw === "small" || raw === "medium" || raw === "large"
