@@ -3,17 +3,14 @@ import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
 import DeleteReservation from "./DeleteReservation";
 import Image from "next/image";
 import Link from "next/link";
-import { ReservationCardProps } from "@/@types/next-auth";
-
+import { Booking } from "@/@types/next-auth";
 
 export const formatDistanceFromNow = (dateStr: string) =>
   formatDistance(parseISO(dateStr), new Date(), {
     addSuffix: true,
   }).replace("about ", "");
 
-
-
-function ReservationCard({ booking }: ReservationCardProps) {
+function ReservationCard({ booking }: { booking: Booking }) {
   const {
     id,
     startDate,
@@ -22,8 +19,13 @@ function ReservationCard({ booking }: ReservationCardProps) {
     totalPrice,
     numGuests,
     created_at,
-    cabins: { name, image },
+    cabins,
   } = booking;
+
+  if (!cabins) return null;
+  const { name, image } = cabins;
+
+  console.log("Processing booking:", booking);
 
   return (
     <div className="border-primary-800 flex border">

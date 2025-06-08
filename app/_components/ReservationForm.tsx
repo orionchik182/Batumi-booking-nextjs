@@ -8,13 +8,12 @@ import FormUpdateButton from "./FormUpdateButton";
 import Image from "next/image";
 import { ReservationFormProps } from "@/@types/next-auth";
 
-
 function ReservationForm({ cabin, user }: ReservationFormProps) {
   const { range, resetRange } = useReservation();
   const { maxCapacity, regularPrice, discount, id } = cabin;
 
-  const startDate = range.from;
-  const endDate = range.to;
+  const startDate = range?.from;
+  const endDate = range?.to;
 
   if (!startDate || !endDate) return null;
 

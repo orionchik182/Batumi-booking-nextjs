@@ -14,7 +14,7 @@ interface ReservationProviderProps {
 }
 
 function ReservationProvider({ children }: ReservationProviderProps) {
-  const [range, setRange] = useState<RangeType>(initialState);
+  const [range, setRange] = useState<RangeType | undefined>(initialState);
   const resetRange = () => setRange(initialState);
 
   return (

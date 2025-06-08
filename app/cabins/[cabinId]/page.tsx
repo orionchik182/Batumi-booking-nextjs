@@ -7,11 +7,13 @@ import { Metadata } from "next";
 
 import { ReactElement, Suspense } from "react";
 
-export async function generateMetadata({
-  params,
-}: {
+type Props = {
   params: { cabinId: string };
-}): Promise<Metadata> {
+
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cabin = await getCabin(Number(params.cabinId));
   const name = cabin?.name;
   return { title: name ? `Cabin ${name}` : "Cabin" };

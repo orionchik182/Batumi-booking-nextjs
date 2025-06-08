@@ -107,7 +107,15 @@ export async function getBookings(guestId: number): Promise<Booking[]> {
     throw new Error("Bookings could not get loaded");
   }
 
-  return data as Booking[];
+  if (!data) return [];
+
+  const transformedData = data.map((booking) => ({
+    ...booking,
+
+    cabins: Array.isArray(booking.cabins) ? booking.cabins[0] : booking.cabins,
+  }));
+
+  return transformedData;
 }
 
 export async function getBookedDatesByCabinId(

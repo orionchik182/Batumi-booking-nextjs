@@ -61,7 +61,7 @@ export interface Booking {
   cabins: {
     name: string;
     image: string;
-  };
+  } | null;
 }
 
 export interface ErrorProps {

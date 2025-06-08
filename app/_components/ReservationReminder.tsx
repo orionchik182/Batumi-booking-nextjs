@@ -7,7 +7,7 @@ import { useReservation } from "@/app/_components/ReservationContext";
 function ReservationReminder() {
   const { range, resetRange } = useReservation();
 
-  if (!range.from || !range.to) return null;
+  if (!range?.from || !range?.to) return null;
 
   return (
     <div className="bg-accent-500 text-primary-800 text fixed bottom-6 left-1/2 flex -translate-x-1/2 items-center gap-8 rounded-full px-8 py-5 font-semibold shadow-xl shadow-slate-900">

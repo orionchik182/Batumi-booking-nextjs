@@ -1,15 +1,20 @@
 import FormUpdateButton from "@/app/_components/FormUpdateButton";
 import { updateReservation } from "@/app/_lib/actions";
-
-
+import type { Metadata } from "next";
 import { getBooking, getCabin } from "@/app/_lib/data-service";
 
-
-export default async function Page({
-  params,
-}: {
+type Props = {
   params: { id: string };
-}) {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  return {
+    title: `Edit Reservation #${params.id}`,
+  };
+}
+
+export default async function Page({ params }: Props) {
   const id = Number(params.id);
 
   const booking = await getBooking(id);
