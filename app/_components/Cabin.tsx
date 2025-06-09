@@ -7,18 +7,13 @@ import { CabinsDataType } from "@/@types/next-auth";
 function Cabin({ cabin }: { cabin: CabinsDataType }) {
   const { name, maxCapacity, image, description } = cabin;
   return (
-    <div className="border-primary-800 mb-24 grid grid-cols-[3fr_4fr] gap-20 border px-10 py-3">
-      <div className="relative -translate-x-3">
-        <Image
-          src={image}
-          fill
-          className="object-cover"
-          alt={`Cabin ${name}`}
-        />
+    <div className="border-primary-800 mb-24 grid gap-10 border px-4 py-3 md:grid-cols-[3fr_4fr] md:gap-20 md:px-10">
+      <div className="relative md:-translate-x-3">
+        <Image src={image} fill className="object-cover" alt={`Cabin ${name}`} />
       </div>
 
       <div>
-        <h3 className="text-accent-100 bg-primary-950 mb-5 w-[150%] translate-x-[-254px] p-6 pb-1 text-7xl font-black">
+        <h3 className="text-accent-100 bg-primary-950 mb-5 text-4xl font-black md:w-[150%] md:-translate-x-[254px] md:p-6 md:pb-1 md:text-7xl">
           Cabin {name}
         </h3>
 
@@ -34,8 +29,7 @@ function Cabin({ cabin }: { cabin: CabinsDataType }) {
           <li className="flex items-center gap-3">
             <MapPinIcon className="text-primary-600 h-5 w-5" />
             <span className="text-lg">
-              Located in the heart of the{" "}
-              <span className="font-bold">Dolomites</span> (Italy)
+              Located in the heart of the <span className="font-bold">Dolomites</span> (Italy)
             </span>
           </li>
           <li className="flex items-center gap-3">

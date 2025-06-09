@@ -42,7 +42,7 @@ function DateSelector({ settings, cabin, bookedDates }: DateSelectorProps) {
   const { minBookingLength, maxBookingLength } = settings;
 
   return (
-    <div className="flex max-w-[600px] flex-col justify-between overflow-x-auto">
+    <div className="flex max-w-full flex-col justify-between overflow-x-auto md:max-w-[600px]">
       <DayPicker
         style={{ transform: "scale(0.8)", transformOrigin: "center" }}
         classNames={{

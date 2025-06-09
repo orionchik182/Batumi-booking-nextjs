@@ -3,26 +3,23 @@ import { UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 
-
 function CabinCard({ cabin }: { cabin: CabinsDataType }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
 
   return (
-    <div className="border-primary-800 flex border">
-      <div className="relative flex-1">
+    <div className="border-primary-800 flex flex-col border sm:flex-row">
+      <div className="relative h-52 flex-shrink-0 sm:h-auto sm:flex-1">
         <Image
           src={image}
           fill
           alt={`Cabin ${name}`}
-          className="border-primary-800 border-r object-cover"
+          className="border-primary-800 object-cover sm:border-r"
         />
       </div>
 
       <div className="flex-grow">
         <div className="bg-primary-950 px-7 pt-5 pb-4">
-          <h3 className="text-accent-500 mb-3 text-2xl font-semibold">
-            Cabin {name}
-          </h3>
+          <h3 className="text-accent-500 mb-3 text-2xl font-semibold">Cabin {name}</h3>
 
           <div className="mb-2 flex items-center gap-3">
             <UsersIcon className="text-primary-600 h-5 w-5" />
@@ -34,12 +31,8 @@ function CabinCard({ cabin }: { cabin: CabinsDataType }) {
           <p className="flex items-baseline justify-end gap-3">
             {discount > 0 ? (
               <>
-                <span className="text-3xl font-[350]">
-                  ${regularPrice - discount}
-                </span>
-                <span className="text-primary-600 font-semibold line-through">
-                  ${regularPrice}
-                </span>
+                <span className="text-3xl font-[350]">${regularPrice - discount}</span>
+                <span className="text-primary-600 font-semibold line-through">${regularPrice}</span>
               </>
             ) : (
               <span className="text-3xl font-[350]">${regularPrice}</span>
